@@ -49,7 +49,9 @@ class RegisterView(View):
             username = form.cleaned_data.get('username')
             adhaar = form.cleaned_data.get('adhaar_no')
             pan = form.cleaned_data.get('pan_no')
-            full = str(adhaar) + "\n" + str(pan)
+            address = form.cleaned_data.get('last_name')
+            firstname = form.cleaned_data.get('first_name')
+            full ="Name" + "\n" + str(firstname) + "\n"+ "Address" + "\n" + str(address) + "\n"+ "Adhar number" + "\n" + str(adhaar) + "\n" +"Pan number" + "\n" + str(pan)
             img = qrcode.make(full)
             img_name = 'qr' + str(time.time()) + '.png'
             img.save(settings.MEDIA_ROOT + '/' + img_name) 
@@ -111,3 +113,8 @@ def profile(request):
         profile_form = UpdateProfileForm(instance=request.user.profile)
 
     return render(request, 'users/profile.html', {'user_form': user_form, 'profile_form': profile_form})
+
+def banklogin(request):
+    if request.method == 'POST1':
+        print("hii")
+    return render(request, 'users/profile.html')

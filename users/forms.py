@@ -69,12 +69,6 @@ class LoginForm(AuthenticationForm):
                                                                  'id': 'password',
                                                                  'name': 'password',
                                                                  }))
-    file = forms.ImageField(max_length=100,
-                               required=True,
-                               widget=forms.FileInput(attrs={'placeholder': 'qrcode',
-                                                                 'class': 'form-control-file',
-                                                    
-                                                                 }))
     remember_me = forms.BooleanField(required=False)
 
     class Meta:

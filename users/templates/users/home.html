@@ -2,10 +2,10 @@
 {% block title %} Home Page {% endblock title%}
 {% block content %}
     <div class="jumbotron">
-        <h1 class="display-4">Welcome, {{user.first_name.title|default:'Guest'}} {{user.adhaar_no}}</h1>
+        <h1 class="display-4">WELCOME TO CITIZEN CARD SYSTEM, {{user.first_name.title|default:'Guest'}} {{user.adhaar_no}}</h1>
 
         <p class="lead">
-           <b> This is user KYC creation  and login system</b>
+           <b> KYC creation and login system</b>
         </p>
         <hr class="my-4">
         <p class="lead">
@@ -13,6 +13,8 @@
                 <a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
             {% else %}
                 <a class="btn btn-primary btn-lg" href="{% url 'banklogin' %}" role="button">Bank sign in</a>
+
+                <a class="btn btn-primary btn-lg" href="{% url 'telephonelogin' %}" role="button">Telephone sign in</a>
             {% endif %}
         </p>
     </div>

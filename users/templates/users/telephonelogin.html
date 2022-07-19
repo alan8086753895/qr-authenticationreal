@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p style="text-align:center;">
+<img src="https://images.news18.com/ibnlive/uploads/2021/10/bsnl.jpg" alt="SBI" class="center" width="500" height="500">
+   <h3  style="text-align:center"> Welcome to BSNL 'KYC' verification page  </h3>
+{% extends "users/base.html" %}
+{% block title %} Login Page {% endblock title%}
+{% block content %}
+
+    <div class="form-content my-3 p-3">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card shadow-lg border-0 rounded-lg mt-0 mb-3">
+                        <div class="card-header justify-content-center">
+                          <h3 class="font-weight-light my-1 text-center">Sign In</h3>
+                        </div>
+                        {% if form.errors %}
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <div id="form_errors">
+                                    {% for key, value in form.errors.items %}
+                                        <strong>{{ value }}</strong>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <form method="POST1">
+                                <div class="form-row">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group">
+                                            <label class="small mb-1">Username</label>
+                                            {{ form.username }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group">
+                                          <label class="small mb-1">Password</label>
+                                          {{ form.password }}
+                                        </div>
+                                    </div>
+                                </div>
+                        <div class="form-group m-3">
+                            <label>Upload QR-CODE</label>
+                            <input required name="images" type="file" multiple class="form-control-file">
+                        </div>
+                                <div class="form-row">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group mt-0 mb-1">
+                                          <button onclick="myFunction()">Sign in</button>
+
+<script>
+function myFunction() {
+  alert("Account under verification please go to home page");
+}
+</script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer text-center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+{% endblock content %}
+</p>
+
+</body>
+</html>

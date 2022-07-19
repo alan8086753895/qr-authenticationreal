@@ -22,24 +22,7 @@ class RegisterForm(UserCreationForm):
                                widget=forms.TextInput(attrs={'placeholder': 'Username',
                                                              'class': 'form-control',
                                                              }))
-    email = forms.EmailField(required=True,
-                             widget=forms.TextInput(attrs={'placeholder': 'Email',
-                                                           'class': 'form-control',
-                                                           }))
-    password1 = forms.CharField(max_length=50,
-                                required=True,
-                                widget=forms.PasswordInput(attrs={'placeholder': 'Password',
-                                                                  'class': 'form-control',
-                                                                  'data-toggle': 'password',
-                                                                  'id': 'password',
-                                                                  }))
-    password2 = forms.CharField(max_length=50,
-                                required=True,
-                                widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password',
-                                                                  'class': 'form-control',
-                                                                  'data-toggle': 'password',
-                                                                  'id': 'password',
-                                                                  }))
+
     adhaar_no = forms.CharField(max_length=100,
                                required=True,
                                widget=forms.TextInput(attrs={'placeholder': 'Adhaar_No',
@@ -52,7 +35,7 @@ class RegisterForm(UserCreationForm):
                                                              }))
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2','adhaar_no','pan_no']
+        fields = ['first_name', 'last_name', 'username', 'adhaar_no','pan_no']
 
 
 class LoginForm(AuthenticationForm):
@@ -95,3 +78,4 @@ class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['avatar', 'bio']
+

@@ -6,7 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from .models import QrCode
-from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
+from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm,forms
 from django.conf import settings
 from qrcode import *
 import time
@@ -28,13 +28,6 @@ class RegisterView(View):
     initial = {'key': 'value'}
     template_name = 'users/register.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        # will redirect to the home page if a user tries to access the register page while logged in
-        if request.user.is_authenticated:
-            return redirect(to='/')
-
-        # else process dispatch as it otherwise normally would
-        return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.initial)
@@ -42,9 +35,13 @@ class RegisterView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+        print(form)
+        print("okk")
+        x = True
 
-        if form.is_valid():
-            form.save()
+        if x:
+            print("hiiii")
+
 
             username = form.cleaned_data.get('username')
             adhaar = form.cleaned_data.get('adhaar_no')
@@ -97,24 +94,42 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     success_url = reverse_lazy('users-home')
 
 
-@login_required
-def profile(request):
-    if request.method == 'POST':
-        user_form = UpdateUserForm(request.POST, instance=request.user)
-        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, 'Your profile is updated successfully')
-            return redirect(to='users-profile')
-    else:
-        user_form = UpdateUserForm(instance=request.user)
-        profile_form = UpdateProfileForm(instance=request.user.profile)
-
-    return render(request, 'users/profile.html', {'user_form': user_form, 'profile_form': profile_form})
 
 def banklogin(request):
     if request.method == 'POST1':
         print("hii")
     return render(request, 'users/profile.html')
+
+@login_required()
+class profile(View):
+    form_class = RegisterForm
+    initial = {'key': 'value'}
+    template_name = 'users/register.html'
+
+
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+
+
+            username = form.cleaned_data.get('username')
+            adhaar = form.cleaned_data.get('adhaar_no')
+            pan = form.cleaned_data.get('pan_no')
+            address = form.cleaned_data.get('last_name')
+            firstname = form.cleaned_data.get('first_name')
+            full ="Name" + "\n" + str(firstname) + "\n"+ "Address" + "\n" + str(address) + "\n"+ "Adhar number" + "\n" + str(adhaar) + "\n" +"Pan number" + "\n" + str(pan)
+            img = qrcode.make(full)
+            img_name = 'qr' + str(time.time()) + '.png'
+            img.save(settings.MEDIA_ROOT + '/' + img_name)
+            messages.success(request, f'Account created for {username} {adhaar}')
+            return render(request, 'users/index.html', {'img_name': img_name})
+            return redirect(to='login')
+
+        return render(request, self.template_name, {'form': form})
